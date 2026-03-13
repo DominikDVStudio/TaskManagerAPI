@@ -1,25 +1,61 @@
-﻿# Default ignored files
-/shelf/
-/workspace.xml
-# Rider ignored files
-/contentModel.xml
-/projectSettingsUpdater.xml
-/.idea.TaskManagerApi.iml
-/modules.xml
-# Editor-based HTTP Client requests
-/httpRequests/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
-# Build Folders
+﻿# =========================
+# Rider / JetBrains
+# =========================
+.idea/
+*.iml
+*.iws
+*.ipr
+workspace.xml
+shelf/
+contentModel.xml
+projectSettingsUpdater.xml
+modules.xml
+httpRequests/
+dataSources/
+dataSources.local.xml
+
+# =========================
+# .NET / ASP.NET Core
+# =========================
+
+# Build folders
 bin/
 obj/
+
 # Publish output
 publish/
 out/
+
+# DLL / EXE / PDB / cache files
+*.dll
+*.exe
+*.pdb
+*.cache
+*.mdb
+*.runtimeconfig.json
+
 # NuGet packages
 *.nupkg
 packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# =========================
+# Environment / config
+# =========================
+.env
+appsettings.Development.json
+
 # OS files
 .DS_Store
 Thumbs.db
+
+# ReSharper / Rider caches
+_ReSharper*/
