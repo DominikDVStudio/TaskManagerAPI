@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskManagerApi.Application.Interfaces;
+using TaskManagerApi.Application.UseCases.UpdateTask;
 using TaskManagerApi.Domain.Entities;
 using TaskManagerApi.DTOs;
 
@@ -10,10 +11,12 @@ namespace TaskManagerApi.Controllers;
 public class TasksController : ControllerBase
 {
     readonly ITaskRepository _repository;
+    readonly UpdateTaskUseCase _updateTaskUseCase;
 
-    public TasksController(ITaskRepository repository)
+    public TasksController(ITaskRepository repository, UpdateTaskUseCase updateTaskUseCase)
     {
         _repository = repository;
+        _updateTaskUseCase = updateTaskUseCase;
     }
 
     [HttpGet]
@@ -60,17 +63,19 @@ public class TasksController : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<TaskItem>> Update(Guid id, UpdateTaskDto dto)
     {
-        var task  = await _repository.GetByIdAsync(id);
-        
-        if (task == null)
+        var command = new UpdateTaskCommand
+        {
+            Id = id,
+            Title = dto.Title,
+            Description = dto.Description,
+            IsDone = dto.IsDone
+        };
+
+        var result = await _updateTaskUseCase.Execute(command);
+
+        if (result == null)
             return NotFound();
-        
-        task.Title = dto.Title;
-        task.Description = dto.Description;
-        task.IsDone = dto.IsDone;
-        
-        await _repository.UpdateAsync(task);
-        
+
         return NoContent();
     }
 }
