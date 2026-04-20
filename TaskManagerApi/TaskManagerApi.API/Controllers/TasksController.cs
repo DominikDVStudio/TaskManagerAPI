@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskManagerApi.Application.Interfaces;
+using TaskManagerApi.Application.UseCases.CreateTask;
 using TaskManagerApi.Application.UseCases.UpdateTask;
 using TaskManagerApi.Domain.Entities;
 using TaskManagerApi.DTOs;
@@ -12,11 +13,14 @@ public class TasksController : ControllerBase
 {
     readonly ITaskRepository _repository;
     readonly UpdateTaskUseCase _updateTaskUseCase;
+    readonly CreateTaskUseCase _createTaskUseCase;
 
-    public TasksController(ITaskRepository repository, UpdateTaskUseCase updateTaskUseCase)
+    public TasksController(ITaskRepository repository, UpdateTaskUseCase updateTaskUseCase,
+        CreateTaskUseCase createTaskUseCase)
     {
         _repository = repository;
         _updateTaskUseCase = updateTaskUseCase;
+        _createTaskUseCase = createTaskUseCase;
     }
 
     [HttpGet]
@@ -28,17 +32,15 @@ public class TasksController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateTaskDto dto)
     {
-        var task = new TaskItem
+        var command = new CreateTaskCommand
         {
-            Id = Guid.NewGuid(),
             Title = dto.Title,
             Description = dto.Description,
-            IsDone = false,
         };
 
-        await _repository.CreateAsync(task);
+        var result = await _createTaskUseCase.Execute(command);
 
-        return Ok(task);
+        return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
     [HttpGet("{id:guid}")]
