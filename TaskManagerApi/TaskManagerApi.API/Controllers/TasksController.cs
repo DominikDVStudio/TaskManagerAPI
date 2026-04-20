@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskManagerApi.Application.Interfaces;
 using TaskManagerApi.Application.UseCases.CreateTask;
+using TaskManagerApi.Application.UseCases.DeleteTask;
 using TaskManagerApi.Application.UseCases.UpdateTask;
 using TaskManagerApi.Domain.Entities;
 using TaskManagerApi.DTOs;
@@ -14,13 +15,18 @@ public class TasksController : ControllerBase
     readonly ITaskRepository _repository;
     readonly UpdateTaskUseCase _updateTaskUseCase;
     readonly CreateTaskUseCase _createTaskUseCase;
+    readonly DeleteTaskUseCase _deleteTaskUseCase;
 
-    public TasksController(ITaskRepository repository, UpdateTaskUseCase updateTaskUseCase,
-        CreateTaskUseCase createTaskUseCase)
+    public TasksController(
+        ITaskRepository repository,
+        UpdateTaskUseCase updateTaskUseCase,
+        CreateTaskUseCase createTaskUseCase,
+        DeleteTaskUseCase deleteTaskUseCase)
     {
         _repository = repository;
         _updateTaskUseCase = updateTaskUseCase;
         _createTaskUseCase = createTaskUseCase;
+        _deleteTaskUseCase = deleteTaskUseCase;
     }
 
     [HttpGet]
@@ -57,7 +63,12 @@ public class TasksController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult> Delete(Guid id)
     {
-        await _repository.DeleteAsync(id);
+        var command = new DeleteTaskCommand
+        {
+            Id = id
+        };
+        
+        await _deleteTaskUseCase.Execute(command);
 
         return NoContent();
     }

@@ -1,5 +1,6 @@
 using TaskManagerApi.Application.Interfaces;
 using TaskManagerApi.Application.UseCases.CreateTask;
+using TaskManagerApi.Application.UseCases.DeleteTask;
 using TaskManagerApi.Infrastructure.Repositories;
 using TaskManagerApi.Application.UseCases.UpdateTask;
 
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<UpdateTaskUseCase>();
 builder.Services.AddScoped<CreateTaskUseCase>();
+builder.Services.AddScoped<DeleteTaskUseCase>();
 
 var app = builder.Build();
 
