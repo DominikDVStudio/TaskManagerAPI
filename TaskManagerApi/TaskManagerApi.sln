@@ -3,6 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerApi.API", "TaskManagerApi.API\TaskManagerApi.API.csproj", "{9A0DB902-2DE7-4AE4-992E-9F92BB1D2FEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B7B1E0CA-7DA7-439B-8040-FB75DFA448F2}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore.txt = .gitignore.txt
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerApi.Domain", "TaskManagerApi.Domain\TaskManagerApi.Domain.csproj", "{F33BADFA-C475-440C-B7C0-1522924402BD}"
 EndProject
