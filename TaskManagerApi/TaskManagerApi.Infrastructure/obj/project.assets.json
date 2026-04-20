@@ -1,37 +1,89 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {}
+    "net8.0": {
+      "TaskManagerApi.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "TaskManagerApi.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TaskManagerApi.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TaskManagerApi.Application.dll": {}
+        }
+      },
+      "TaskManagerApi.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/TaskManagerApi.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TaskManagerApi.Domain.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "TaskManagerApi.Application/1.0.0": {
+      "type": "project",
+      "path": "../TaskManagerApi.Application/TaskManagerApi.Application.csproj",
+      "msbuildProject": "../TaskManagerApi.Application/TaskManagerApi.Application.csproj"
+    },
+    "TaskManagerApi.Domain/1.0.0": {
+      "type": "project",
+      "path": "../TaskManagerApi.Domain/TaskManagerApi.Domain.csproj",
+      "msbuildProject": "../TaskManagerApi.Domain/TaskManagerApi.Domain.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0": []
+    "net8.0": [
+      "TaskManagerApi.Application >= 1.0.0",
+      "TaskManagerApi.Domain >= 1.0.0"
+    ]
   },
   "packageFolders": {
-    "/Users/dominik/.nuget/packages/": {}
+    "C:\\Users\\domin\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/dominik/Documents/GitHub/TaskManagerAPI/TaskManagerApi/TaskManagerApi.Infrastructure/TaskManagerApi.Infrastructure.csproj",
+      "projectUniqueName": "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Infrastructure\\TaskManagerApi.Infrastructure.csproj",
       "projectName": "TaskManagerApi.Infrastructure",
-      "projectPath": "/Users/dominik/Documents/GitHub/TaskManagerAPI/TaskManagerApi/TaskManagerApi.Infrastructure/TaskManagerApi.Infrastructure.csproj",
-      "packagesPath": "/Users/dominik/.nuget/packages/",
-      "outputPath": "/Users/dominik/Documents/GitHub/TaskManagerAPI/TaskManagerApi/TaskManagerApi.Infrastructure/obj/",
+      "projectPath": "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Infrastructure\\TaskManagerApi.Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\domin\\.nuget\\packages\\",
+      "outputPath": "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/dominik/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\domin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Application\\TaskManagerApi.Application.csproj": {
+              "projectPath": "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Application\\TaskManagerApi.Application.csproj"
+            },
+            "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Domain\\TaskManagerApi.Domain.csproj": {
+              "projectPath": "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Domain\\TaskManagerApi.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -64,7 +116,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/Users/dominik/.dotnet/sdk/8.0.419/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\domin\\.dotnet\\sdk\\8.0.419/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

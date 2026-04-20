@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KlPiBEtmEwA=",
+  "dgSpecHash": "9ymrqbm+j3A=",
   "success": true,
-  "projectFilePath": "/Users/dominik/Documents/GitHub/TaskManagerAPI/TaskManagerApi/TaskManagerApi.Domain/TaskManagerApi.Domain.csproj",
+  "projectFilePath": "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Domain\\TaskManagerApi.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

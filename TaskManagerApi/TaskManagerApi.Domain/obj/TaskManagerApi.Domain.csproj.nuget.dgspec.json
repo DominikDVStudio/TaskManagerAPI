@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/Users/dominik/Documents/GitHub/TaskManagerAPI/TaskManagerApi/TaskManagerApi.Domain/TaskManagerApi.Domain.csproj": {}
+    "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Domain\\TaskManagerApi.Domain.csproj": {}
   },
   "projects": {
-    "/Users/dominik/Documents/GitHub/TaskManagerAPI/TaskManagerApi/TaskManagerApi.Domain/TaskManagerApi.Domain.csproj": {
+    "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Domain\\TaskManagerApi.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/dominik/Documents/GitHub/TaskManagerAPI/TaskManagerApi/TaskManagerApi.Domain/TaskManagerApi.Domain.csproj",
+        "projectUniqueName": "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Domain\\TaskManagerApi.Domain.csproj",
         "projectName": "TaskManagerApi.Domain",
-        "projectPath": "/Users/dominik/Documents/GitHub/TaskManagerAPI/TaskManagerApi/TaskManagerApi.Domain/TaskManagerApi.Domain.csproj",
-        "packagesPath": "/Users/dominik/.nuget/packages/",
-        "outputPath": "/Users/dominik/Documents/GitHub/TaskManagerAPI/TaskManagerApi/TaskManagerApi.Domain/obj/",
+        "projectPath": "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Domain\\TaskManagerApi.Domain.csproj",
+        "packagesPath": "C:\\Users\\domin\\.nuget\\packages\\",
+        "outputPath": "C:\\CsharpProjects\\TaskManagerApi\\TaskManagerApi.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/dominik/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\domin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -58,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/Users/dominik/.dotnet/sdk/8.0.419/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\domin\\.dotnet\\sdk\\8.0.419/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

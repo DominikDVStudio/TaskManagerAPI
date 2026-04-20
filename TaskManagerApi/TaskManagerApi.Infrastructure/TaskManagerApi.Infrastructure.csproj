@@ -10,4 +10,9 @@
       <Folder Include="Presistence\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\TaskManagerApi.Application\TaskManagerApi.Application.csproj" />
+      <ProjectReference Include="..\TaskManagerApi.Domain\TaskManagerApi.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

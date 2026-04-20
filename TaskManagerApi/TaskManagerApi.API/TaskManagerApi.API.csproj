@@ -13,7 +13,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
+      <ProjectReference Include="..\TaskManagerApi.Application\TaskManagerApi.Application.csproj" />
+      <ProjectReference Include="..\TaskManagerApi.Infrastructure\TaskManagerApi.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
