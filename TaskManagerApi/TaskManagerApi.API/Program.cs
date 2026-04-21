@@ -3,6 +3,8 @@ using TaskManagerApi.Application.UseCases.CreateTask;
 using TaskManagerApi.Application.UseCases.DeleteTask;
 using TaskManagerApi.Infrastructure.Repositories;
 using TaskManagerApi.Application.UseCases.UpdateTask;
+using Microsoft.EntityFrameworkCore;
+using TaskManagerApi.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,10 @@ builder.Services.AddSingleton<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<UpdateTaskUseCase>();
 builder.Services.AddScoped<CreateTaskUseCase>();
 builder.Services.AddScoped<DeleteTaskUseCase>();
+
+// Db registration 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
