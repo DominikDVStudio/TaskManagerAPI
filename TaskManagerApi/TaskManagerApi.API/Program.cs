@@ -12,8 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Singleton for testing operations
-builder.Services.AddSingleton<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<UpdateTaskUseCase>();
 builder.Services.AddScoped<CreateTaskUseCase>();
 builder.Services.AddScoped<DeleteTaskUseCase>();

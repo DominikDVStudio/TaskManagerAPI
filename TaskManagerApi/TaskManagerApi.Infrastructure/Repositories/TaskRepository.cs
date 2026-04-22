@@ -1,42 +1,50 @@
-﻿using TaskManagerApi.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using TaskManagerApi.Application.Interfaces;
 using TaskManagerApi.Domain.Entities;
+using TaskManagerApi.Infrastructure.Data;
 
 namespace TaskManagerApi.Infrastructure.Repositories;
 
 public class TaskRepository : ITaskRepository
 {
-    readonly List<TaskItem> _tasks = [];
+    readonly AppDbContext _dbContext;
 
-    public Task<List<TaskItem>> GetAllAsync()
+    public TaskRepository(AppDbContext dbContext)
     {
-        return Task.FromResult(_tasks);
+        _dbContext = dbContext;
     }
 
-    public Task<TaskItem?> GetByIdAsync(Guid id)
+    public async Task<List<TaskItem>> GetAllAsync()
     {
-        var task = _tasks.FirstOrDefault(t => t.Id == id);
-        return Task.FromResult(task);
+        return await _dbContext.Tasks.ToListAsync();
     }
 
-    public Task CreateAsync(TaskItem taskItem)
+    public async Task<TaskItem?> GetByIdAsync(Guid id)
     {
-        _tasks.Add(taskItem);
-        return Task.CompletedTask;
+        return await _dbContext.Tasks.FirstOrDefaultAsync(t => t.Id == id);
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task CreateAsync(TaskItem taskItem)
     {
-        var task = _tasks.FirstOrDefault(t => t.Id == id);
+        await _dbContext.Tasks.AddAsync(taskItem);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        var task = await _dbContext.Tasks
+            .FirstOrDefaultAsync(t => t.Id == id);
 
         if (task == null)
             throw new Exception($"Task with id: {id} not found");
 
-        _tasks.Remove(task);
-        return Task.CompletedTask;
+        _dbContext.Tasks.Remove(task);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public Task UpdateAsync(TaskItem updatedTask)
+    public async Task UpdateAsync(TaskItem updatedTask)
     {
-        return Task.CompletedTask;
+        _dbContext.Tasks.Update(updatedTask);
+        await _dbContext.SaveChangesAsync();
     }
 }
