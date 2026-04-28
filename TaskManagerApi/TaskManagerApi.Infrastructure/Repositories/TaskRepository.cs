@@ -34,10 +34,10 @@ public class TaskRepository : ITaskRepository
     {
         var task = await _dbContext.Tasks
             .FirstOrDefaultAsync(t => t.Id == id);
-
-        if (task == null)
-            throw new Exception($"Task with id: {id} not found");
-
+       
+       if (task == null)
+           throw new Exception($"Task with id: {id} not found");
+       
         _dbContext.Tasks.Remove(task);
         await _dbContext.SaveChangesAsync();
     }
