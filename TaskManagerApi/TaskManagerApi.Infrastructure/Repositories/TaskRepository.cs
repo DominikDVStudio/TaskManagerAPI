@@ -19,7 +19,7 @@ public class TaskRepository : ITaskRepository
         return await _dbContext.Tasks.ToListAsync();
     }
 
-    public async Task<TaskItem?> GetByIdAsync(Guid id)
+    public async Task<TaskItem?> GetByIdAsync(int id)
     {
         return await _dbContext.Tasks.FirstOrDefaultAsync(t => t.Id == id);
     }
@@ -30,7 +30,7 @@ public class TaskRepository : ITaskRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(int id)
     {
         var task = await _dbContext.Tasks
             .FirstOrDefaultAsync(t => t.Id == id);

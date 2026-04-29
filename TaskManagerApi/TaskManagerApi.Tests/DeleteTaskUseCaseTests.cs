@@ -14,18 +14,20 @@ public class DeleteTaskUseCaseTests
         var repoMock = new Mock<ITaskRepository>();
 
         repoMock
-            .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
+            .Setup(r => r.GetByIdAsync(It.IsAny<int>()))
             .ReturnsAsync((TaskItem?)null);
 
         var useCase = new DeleteTaskUseCase(repoMock.Object);
 
         var command = new DeleteTaskCommand
         {
-            Id = Guid.NewGuid()
+           Id = It.IsAny<int>()
         };
 
         // Act + Assert
-        await Assert.ThrowsAsync<Exception>(() => useCase.Execute(command));
+        await Assert.ThrowsAsync<KeyNotFoundException>(
+            () => useCase.Execute(command)
+        );
     }
     
     [Fact]
@@ -36,12 +38,12 @@ public class DeleteTaskUseCaseTests
 
         var task = new TaskItem
         {
-            Id = Guid.NewGuid(),
+            Id = It.IsAny<int>(),
             Title = "Test"
         };
 
         repoMock
-            .Setup(r => r.GetByIdAsync(task.Id))
+            .Setup(r => r.GetByIdAsync(It.IsAny<int>()))
             .ReturnsAsync(task);
 
         var useCase = new DeleteTaskUseCase(repoMock.Object);

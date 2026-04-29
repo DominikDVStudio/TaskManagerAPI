@@ -16,7 +16,6 @@ public class CreateTaskUseCase
     {
         var task = new TaskItem
         {
-            Id = Guid.NewGuid(),
             Title = command.Title,
             Description = command.Description,
         };

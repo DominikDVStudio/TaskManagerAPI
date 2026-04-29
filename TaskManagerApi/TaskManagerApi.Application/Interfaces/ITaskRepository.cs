@@ -6,11 +6,11 @@ public interface ITaskRepository
 {
     Task<List<TaskItem>> GetAllAsync();
     
-    Task<TaskItem?> GetByIdAsync(Guid id);
+    Task<TaskItem?> GetByIdAsync(int id);
     
     Task CreateAsync(TaskItem taskItem);
     
-    Task DeleteAsync(Guid id);
+    Task DeleteAsync(int id);
     
     Task UpdateAsync(TaskItem taskItem);
 }

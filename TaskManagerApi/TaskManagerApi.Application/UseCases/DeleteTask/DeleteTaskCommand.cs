@@ -2,5 +2,5 @@
 
 public class DeleteTaskCommand
 {
-    public Guid Id { get; init; }
+    public int Id { get; init; }
 }

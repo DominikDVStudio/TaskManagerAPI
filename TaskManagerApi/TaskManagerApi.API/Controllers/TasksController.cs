@@ -49,8 +49,8 @@ public class TasksController : ControllerBase
         return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<ActionResult<TaskItem>> Get(Guid id)
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<TaskItem>> Get(int id)
     {
         var task = await _repository.GetByIdAsync(id);
 
@@ -60,8 +60,8 @@ public class TasksController : ControllerBase
         return Ok(task);
     }
 
-    [HttpDelete("{id:guid}")]
-    public async Task<ActionResult> Delete(Guid id)
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> Delete(int id)
     {
         var command = new DeleteTaskCommand
         {
@@ -73,8 +73,8 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
-    [HttpPut("{id:guid}")]
-    public async Task<ActionResult<TaskItem>> Update(Guid id, UpdateTaskDto dto)
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult<TaskItem>> Update(int id, UpdateTaskDto dto)
     {
         var command = new UpdateTaskCommand
         {
