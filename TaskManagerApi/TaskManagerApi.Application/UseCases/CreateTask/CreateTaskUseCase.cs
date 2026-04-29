@@ -20,6 +20,9 @@ public class CreateTaskUseCase
             Title = command.Title,
             Description = command.Description,
         };
+        
+       if (string.IsNullOrWhiteSpace(command.Title))
+           throw new ArgumentException("Title cannot be empty!");
 
         await _repository.CreateAsync(task);
 
