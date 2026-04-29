@@ -5,6 +5,7 @@ using TaskManagerApi.Infrastructure.Repositories;
 using TaskManagerApi.Application.UseCases.UpdateTask;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Infrastructure.Data;
+using TaskManagerApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

@@ -14,9 +14,9 @@ public class DeleteTaskUseCase
     public async Task Execute(DeleteTaskCommand command)
     {
         var task = await _repository.GetByIdAsync(command.Id);
-        
-        if(task == null)
-            throw new Exception("Task not found");
+
+        if (task == null)
+            throw new KeyNotFoundException("Task not found");
         
         await _repository.DeleteAsync(command.Id);
     }
