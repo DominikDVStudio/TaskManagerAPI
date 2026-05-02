@@ -5,6 +5,7 @@ using TaskManagerApi.Application.UseCases.DeleteTask;
 using TaskManagerApi.Application.UseCases.UpdateTask;
 using TaskManagerApi.Domain.Entities;
 using TaskManagerApi.DTOs;
+using TaskManagerApi.DTOs.Mappers;
 
 namespace TaskManagerApi.Controllers;
 
@@ -35,6 +36,17 @@ public class TasksController : ControllerBase
         return await _repository.GetAllAsync();
     }
 
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<TaskItem>> GetById(int id)
+    {
+        var task = await _repository.GetByIdAsync(id);
+
+        if (task == null)
+            return NotFound();
+
+        return Ok(TaskMapper.ToDto(task));
+    }
+    
     [HttpPost]
     public async Task<IActionResult> Create(CreateTaskDto dto)
     {
@@ -46,18 +58,10 @@ public class TasksController : ControllerBase
 
         var result = await _createTaskUseCase.Execute(command);
 
-        return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
-    }
-
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<TaskItem>> Get(int id)
-    {
-        var task = await _repository.GetByIdAsync(id);
-
-        if (task == null)
-            return NotFound();
-
-        return Ok(task);
+        return CreatedAtAction(
+            nameof(GetById),
+            new { id = result.Id }, 
+            TaskMapper.ToDto(result));
     }
 
     [HttpDelete("{id:int}")]
@@ -74,7 +78,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ActionResult<TaskItem>> Update(int id, UpdateTaskDto dto)
+    public async Task<IActionResult> Update(int id, UpdateTaskDto dto)
     {
         var command = new UpdateTaskCommand
         {
