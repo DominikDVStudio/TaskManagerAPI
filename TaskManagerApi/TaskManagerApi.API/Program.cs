@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using TaskManagerApi.Application.Interfaces;
 using TaskManagerApi.Application.UseCases.CreateTask;
 using TaskManagerApi.Application.UseCases.DeleteTask;
@@ -6,10 +8,16 @@ using TaskManagerApi.Application.UseCases.UpdateTask;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Infrastructure.Data;
 using TaskManagerApi.Middleware;
+using TaskManagerApi.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateTaskDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateTaskDtoValidator>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
