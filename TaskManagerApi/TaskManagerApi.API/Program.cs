@@ -6,6 +6,7 @@ using TaskManagerApi.Application.UseCases.DeleteTask;
 using TaskManagerApi.Infrastructure.Repositories;
 using TaskManagerApi.Application.UseCases.UpdateTask;
 using Microsoft.EntityFrameworkCore;
+using TaskManagerApi.Application.Queries;
 using TaskManagerApi.Infrastructure.Data;
 using TaskManagerApi.Middleware;
 using TaskManagerApi.Validators;
@@ -25,6 +26,8 @@ builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<UpdateTaskUseCase>();
 builder.Services.AddScoped<CreateTaskUseCase>();
 builder.Services.AddScoped<DeleteTaskUseCase>();
+builder.Services.AddScoped<GetTasksQueryHandler>();
+builder.Services.AddScoped<GetTaskByIdQueryHandler>();
 
 // Db registration 
 builder.Services.AddDbContext<AppDbContext>(options =>

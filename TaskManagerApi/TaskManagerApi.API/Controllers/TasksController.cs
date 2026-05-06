@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskManagerApi.Application.Interfaces;
+using TaskManagerApi.Application.Queries;
 using TaskManagerApi.Application.UseCases.CreateTask;
 using TaskManagerApi.Application.UseCases.DeleteTask;
 using TaskManagerApi.Application.UseCases.UpdateTask;
@@ -13,40 +14,56 @@ namespace TaskManagerApi.Controllers;
 [Route("api/tasks")]
 public class TasksController : ControllerBase
 {
-    readonly ITaskRepository _repository;
-    readonly UpdateTaskUseCase _updateTaskUseCase;
-    readonly CreateTaskUseCase _createTaskUseCase;
-    readonly DeleteTaskUseCase _deleteTaskUseCase;
+    private readonly UpdateTaskUseCase _updateTaskUseCase;
+    private readonly CreateTaskUseCase _createTaskUseCase;
+    private readonly DeleteTaskUseCase _deleteTaskUseCase;
+    private readonly GetTasksQueryHandler _getTasksQueryHandler;
+    private readonly GetTaskByIdQueryHandler _getTaskByIdQueryHandler;
 
     public TasksController(
-        ITaskRepository repository,
         UpdateTaskUseCase updateTaskUseCase,
         CreateTaskUseCase createTaskUseCase,
-        DeleteTaskUseCase deleteTaskUseCase)
+        DeleteTaskUseCase deleteTaskUseCase,
+        GetTasksQueryHandler getTasksQueryHandler,
+        GetTaskByIdQueryHandler getTaskByIdQueryHandler)
     {
-        _repository = repository;
         _updateTaskUseCase = updateTaskUseCase;
         _createTaskUseCase = createTaskUseCase;
         _deleteTaskUseCase = deleteTaskUseCase;
+        _getTasksQueryHandler = getTasksQueryHandler;
+        _getTaskByIdQueryHandler = getTaskByIdQueryHandler;
     }
 
     [HttpGet]
-    public async Task<List<TaskItem>> GetTasks()
+    public async Task<ActionResult<List<TaskResponseDto>>> GetTasks()
     {
-        return await _repository.GetAllAsync();
+        var query = new GetTasksQuery();
+
+        List<TaskItem> tasks = await _getTasksQueryHandler.Execute(query);
+
+        List<TaskResponseDto> response = tasks
+            .Select(TaskMapper.ToDto)
+            .ToList();
+
+        return Ok(response);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<TaskItem>> GetById(int id)
+    public async Task<ActionResult<TaskResponseDto>> GetById(int id)
     {
-        var task = await _repository.GetByIdAsync(id);
+        var query = new GetTaskByIdQuery
+        {
+            Id = id
+        };
+
+        var task = await _getTaskByIdQueryHandler.Execute(query);
 
         if (task == null)
             return NotFound();
 
         return Ok(TaskMapper.ToDto(task));
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> Create(CreateTaskDto dto)
     {
@@ -60,7 +77,7 @@ public class TasksController : ControllerBase
 
         return CreatedAtAction(
             nameof(GetById),
-            new { id = result.Id }, 
+            new { id = result.Id },
             TaskMapper.ToDto(result));
     }
 
@@ -71,7 +88,7 @@ public class TasksController : ControllerBase
         {
             Id = id
         };
-        
+
         await _deleteTaskUseCase.Execute(command);
 
         return NoContent();
