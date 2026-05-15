@@ -1,4 +1,5 @@
-﻿using TaskManagerApi.Application.Interfaces;
+﻿using TaskManagerApi.Application.Commands;
+using TaskManagerApi.Application.Interfaces;
 
 namespace TaskManagerApi.Application.UseCases.DeleteTask;
 

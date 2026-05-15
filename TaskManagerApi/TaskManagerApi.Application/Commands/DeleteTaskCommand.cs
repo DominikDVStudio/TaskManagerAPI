@@ -1,4 +1,4 @@
-﻿namespace TaskManagerApi.Application.UseCases.DeleteTask;
+﻿namespace TaskManagerApi.Application.Commands;
 
 public class DeleteTaskCommand
 {

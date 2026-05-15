@@ -1,4 +1,4 @@
-﻿namespace TaskManagerApi.Application.UseCases.CreateTask;
+﻿namespace TaskManagerApi.Application.Commands;
 
 public class CreateTaskCommand
 {
