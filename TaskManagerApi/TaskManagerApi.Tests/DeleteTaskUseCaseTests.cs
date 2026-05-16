@@ -40,7 +40,7 @@ public class DeleteTaskUseCaseTests
         var task = new TaskItem
         {
             Id = It.IsAny<int>(),
-            Title = "Test"
+            Title = "Test",
         };
 
         repoMock
