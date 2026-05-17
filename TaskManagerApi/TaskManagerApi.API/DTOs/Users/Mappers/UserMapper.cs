@@ -11,7 +11,6 @@ public class UserMapper
             Id = user.Id,
             Username = user.Username,
             Email = user.Email,
-            PasswordHash = user.PasswordHash,
         };
     }
 }
