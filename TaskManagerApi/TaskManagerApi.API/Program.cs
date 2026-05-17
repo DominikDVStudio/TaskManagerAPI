@@ -8,6 +8,7 @@ using TaskManagerApi.Application.Queries.TaskItems;
 using TaskManagerApi.Application.UseCases.TaskItems.CreateTask;
 using TaskManagerApi.Application.UseCases.TaskItems.DeleteTask;
 using TaskManagerApi.Application.UseCases.TaskItems.UpdateTask;
+using TaskManagerApi.Application.UseCases.Users.RegisterUser;
 using TaskManagerApi.Infrastructure.Data;
 using TaskManagerApi.Middleware;
 using TaskManagerApi.Validators;
@@ -26,12 +27,19 @@ builder.Services.AddValidatorsFromAssemblyContaining<RegisterUserDtoValidator>()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddScoped<UpdateTaskUseCase>();
 builder.Services.AddScoped<CreateTaskUseCase>();
 builder.Services.AddScoped<DeleteTaskUseCase>();
+
+builder.Services.AddScoped<RegisterUserUseCase>();
+
 builder.Services.AddScoped<GetTasksQueryHandler>();
 builder.Services.AddScoped<GetTaskByIdQueryHandler>();
+
 
 // Db registration 
 builder.Services.AddDbContext<AppDbContext>(options =>
