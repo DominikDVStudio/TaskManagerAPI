@@ -1,7 +1,8 @@
 ﻿using TaskManagerApi.Application.Commands;
+using TaskManagerApi.Application.Commands.TaskItem;
 using TaskManagerApi.Application.Interfaces;
 
-namespace TaskManagerApi.Application.UseCases.DeleteTask;
+namespace TaskManagerApi.Application.UseCases.TaskItems.DeleteTask;
 
 public class DeleteTaskUseCase
 {
@@ -14,11 +15,11 @@ public class DeleteTaskUseCase
 
     public async Task Execute(DeleteTaskCommand command)
     {
-        var task = await _repository.GetByIdAsync(command.Id);
+        var task = await _repository.GetTaskByIdAsync(command.Id);
 
         if (task == null)
             throw new KeyNotFoundException("Task not found");
         
-        await _repository.DeleteAsync(command.Id);
+        await _repository.DeleteTaskAsync(command.Id);
     }
 }

@@ -4,13 +4,13 @@ namespace TaskManagerApi.Application.Interfaces;
 
 public interface ITaskRepository
 {
-    Task<List<TaskItem>> GetAllAsync();
+    Task<List<TaskItem>> GetAllTasksAsync();
     
-    Task<TaskItem?> GetByIdAsync(int id);
+    Task<TaskItem?> GetTaskByIdAsync(int id);
     
-    Task CreateAsync(TaskItem taskItem);
+    Task CreateTaskAsync(TaskItem taskItem);
     
-    Task DeleteAsync(int id);
+    Task DeleteTaskAsync(int id);
     
-    Task UpdateAsync(TaskItem taskItem);
+    Task UpdateTaskAsync(TaskItem taskItem);
 }

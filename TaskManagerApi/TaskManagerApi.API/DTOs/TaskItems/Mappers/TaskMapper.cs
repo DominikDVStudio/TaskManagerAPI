@@ -1,6 +1,6 @@
 ﻿using TaskManagerApi.Domain.Entities;
 
-namespace TaskManagerApi.DTOs.Mappers;
+namespace TaskManagerApi.DTOs.TaskItems.Mappers;
 
 public static class TaskMapper
 {

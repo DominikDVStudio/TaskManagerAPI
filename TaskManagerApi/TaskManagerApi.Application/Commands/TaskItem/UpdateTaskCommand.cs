@@ -1,4 +1,4 @@
-﻿namespace TaskManagerApi.Application.Commands;
+﻿namespace TaskManagerApi.Application.Commands.TaskItem;
 
 public class UpdateTaskCommand
 {

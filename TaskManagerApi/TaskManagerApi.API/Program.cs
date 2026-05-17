@@ -1,15 +1,18 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using TaskManagerApi.Application.Interfaces;
-using TaskManagerApi.Application.UseCases.CreateTask;
-using TaskManagerApi.Application.UseCases.DeleteTask;
 using TaskManagerApi.Infrastructure.Repositories;
-using TaskManagerApi.Application.UseCases.UpdateTask;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Application.Queries;
+using TaskManagerApi.Application.Queries.TaskItems;
+using TaskManagerApi.Application.UseCases.TaskItems.CreateTask;
+using TaskManagerApi.Application.UseCases.TaskItems.DeleteTask;
+using TaskManagerApi.Application.UseCases.TaskItems.UpdateTask;
 using TaskManagerApi.Infrastructure.Data;
 using TaskManagerApi.Middleware;
 using TaskManagerApi.Validators;
+using TaskManagerApi.Validators.TaskItems;
+using TaskManagerApi.Validators.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateTaskDtoValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateTaskDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<RegisterUserDtoValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

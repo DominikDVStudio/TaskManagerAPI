@@ -1,7 +1,8 @@
 ﻿using Moq;
 using TaskManagerApi.Application.Commands;
+using TaskManagerApi.Application.Commands.TaskItem;
 using TaskManagerApi.Application.Interfaces;
-using TaskManagerApi.Application.UseCases.CreateTask;
+using TaskManagerApi.Application.UseCases.TaskItems.CreateTask;
 
 namespace TaskManagerApi.Tests;
 

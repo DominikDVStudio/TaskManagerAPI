@@ -1,7 +1,7 @@
 ﻿using TaskManagerApi.Application.Interfaces;
 using TaskManagerApi.Domain.Entities;
 
-namespace TaskManagerApi.Application.Queries;
+namespace TaskManagerApi.Application.Queries.TaskItems;
 
 public class GetTasksQueryHandler
 {
@@ -14,6 +14,6 @@ public class GetTasksQueryHandler
 
     public async Task<List<TaskItem>> Execute(GetTasksQuery query)
     {
-        return await _repository.GetAllAsync();
+        return await _repository.GetAllTasksAsync();
     }
 }

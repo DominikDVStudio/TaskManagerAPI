@@ -1,8 +1,9 @@
 ﻿using TaskManagerApi.Application.Commands;
+using TaskManagerApi.Application.Commands.TaskItem;
 using TaskManagerApi.Application.Interfaces;
 using TaskManagerApi.Domain.Entities;
 
-namespace TaskManagerApi.Application.UseCases.CreateTask;
+namespace TaskManagerApi.Application.UseCases.TaskItems.CreateTask;
 
 public class CreateTaskUseCase
 {
@@ -21,7 +22,7 @@ public class CreateTaskUseCase
             Description = command.Description,
         };
 
-        await _repository.CreateAsync(task);
+        await _repository.CreateTaskAsync(task);
 
         return task;
     }

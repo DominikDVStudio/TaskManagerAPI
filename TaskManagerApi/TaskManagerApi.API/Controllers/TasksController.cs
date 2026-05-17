@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaskManagerApi.Application.Commands;
-using TaskManagerApi.Application.Interfaces;
-using TaskManagerApi.Application.Queries;
-using TaskManagerApi.Application.UseCases.CreateTask;
-using TaskManagerApi.Application.UseCases.DeleteTask;
-using TaskManagerApi.Application.UseCases.UpdateTask;
+using TaskManagerApi.Application.Commands.TaskItem;
+using TaskManagerApi.Application.Queries.TaskItems;
+using TaskManagerApi.Application.UseCases.TaskItems.CreateTask;
+using TaskManagerApi.Application.UseCases.TaskItems.DeleteTask;
+using TaskManagerApi.Application.UseCases.TaskItems.UpdateTask;
 using TaskManagerApi.Domain.Entities;
-using TaskManagerApi.DTOs;
-using TaskManagerApi.DTOs.Mappers;
+using TaskManagerApi.DTOs.TaskItems;
+using TaskManagerApi.DTOs.TaskItems.Mappers;
 
 namespace TaskManagerApi.Controllers;
 
@@ -66,7 +65,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateTaskDto dto)
+    public async Task<IActionResult> Create([FromBody] CreateTaskDto dto)
     {
         var command = new CreateTaskCommand
         {

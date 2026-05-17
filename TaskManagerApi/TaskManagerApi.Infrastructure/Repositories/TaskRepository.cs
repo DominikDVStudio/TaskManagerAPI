@@ -14,23 +14,23 @@ public class TaskRepository : ITaskRepository
         _dbContext = dbContext;
     }
 
-    public async Task<List<TaskItem>> GetAllAsync()
+    public async Task<List<TaskItem>> GetAllTasksAsync()
     {
         return await _dbContext.Tasks.ToListAsync();
     }
 
-    public async Task<TaskItem?> GetByIdAsync(int id)
+    public async Task<TaskItem?> GetTaskByIdAsync(int id)
     {
         return await _dbContext.Tasks.FirstOrDefaultAsync(t => t.Id == id);
     }
 
-    public async Task CreateAsync(TaskItem taskItem)
+    public async Task CreateTaskAsync(TaskItem taskItem)
     {
         await _dbContext.Tasks.AddAsync(taskItem);
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteTaskAsync(int id)
     {
         var task = await _dbContext.Tasks
             .FirstOrDefaultAsync(t => t.Id == id);
@@ -42,7 +42,7 @@ public class TaskRepository : ITaskRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(TaskItem updatedTask)
+    public async Task UpdateTaskAsync(TaskItem updatedTask)
     {
         _dbContext.Tasks.Update(updatedTask);
         await _dbContext.SaveChangesAsync();

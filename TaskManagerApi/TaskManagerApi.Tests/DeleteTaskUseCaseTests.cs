@@ -1,7 +1,8 @@
 ﻿using Moq;
 using TaskManagerApi.Application.Commands;
+using TaskManagerApi.Application.Commands.TaskItem;
 using TaskManagerApi.Application.Interfaces;
-using TaskManagerApi.Application.UseCases.DeleteTask;
+using TaskManagerApi.Application.UseCases.TaskItems.DeleteTask;
 using TaskManagerApi.Domain.Entities;
 
 namespace TaskManagerApi.Tests;
@@ -15,7 +16,7 @@ public class DeleteTaskUseCaseTests
         var repoMock = new Mock<ITaskRepository>();
 
         repoMock
-            .Setup(r => r.GetByIdAsync(It.IsAny<int>()))
+            .Setup(r => r.GetTaskByIdAsync(It.IsAny<int>()))
             .ReturnsAsync((TaskItem?)null);
 
         var useCase = new DeleteTaskUseCase(repoMock.Object);
@@ -44,7 +45,7 @@ public class DeleteTaskUseCaseTests
         };
 
         repoMock
-            .Setup(r => r.GetByIdAsync(It.IsAny<int>()))
+            .Setup(r => r.GetTaskByIdAsync(It.IsAny<int>()))
             .ReturnsAsync(task);
 
         var useCase = new DeleteTaskUseCase(repoMock.Object);
@@ -58,6 +59,6 @@ public class DeleteTaskUseCaseTests
         await useCase.Execute(command);
 
         // Assert
-        repoMock.Verify(r => r.DeleteAsync(task.Id), Times.Once);
+        repoMock.Verify(r => r.DeleteTaskAsync(task.Id), Times.Once);
     }
 }

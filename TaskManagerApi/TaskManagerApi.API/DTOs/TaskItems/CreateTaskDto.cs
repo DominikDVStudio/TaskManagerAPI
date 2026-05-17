@@ -1,4 +1,4 @@
-﻿namespace TaskManagerApi.DTOs;
+﻿namespace TaskManagerApi.DTOs.TaskItems;
 
 public class CreateTaskDto
 {

@@ -10,4 +10,8 @@
       <ProjectReference Include="..\TaskManagerApi.Domain\TaskManagerApi.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="UseCases\TaskItems\" />
+    </ItemGroup>
+
 </Project>

@@ -1,8 +1,9 @@
 ﻿using TaskManagerApi.Application.Commands;
+using TaskManagerApi.Application.Commands.TaskItem;
 using TaskManagerApi.Application.Interfaces;
 using TaskManagerApi.Domain.Entities;
 
-namespace TaskManagerApi.Application.UseCases.UpdateTask;
+namespace TaskManagerApi.Application.UseCases.TaskItems.UpdateTask;
 
 public class UpdateTaskUseCase
 {
@@ -15,7 +16,7 @@ public class UpdateTaskUseCase
 
     public async Task<TaskItem?> Execute(UpdateTaskCommand command)
     {
-        var task = await _repository.GetByIdAsync(command.Id);
+        var task = await _repository.GetTaskByIdAsync(command.Id);
 
         if (task == null) 
             return null;
@@ -24,7 +25,7 @@ public class UpdateTaskUseCase
         task.Description = command.Description;
         task.IsDone = command.IsDone;
         
-        await _repository.UpdateAsync(task);
+        await _repository.UpdateTaskAsync(task);
         return task;
     }
 }
