@@ -1,16 +1,25 @@
-﻿using TaskManagerApi.Domain.Entities;
+﻿using TaskManagerApi.Application.Auth;
+using TaskManagerApi.Domain.Entities;
 
 namespace TaskManagerApi.DTOs.Users.Mappers;
 
 public class UserMapper
 {
-    public static UserResponseDto ToDto(User user)
+    public static UserResponseDto UserToDto(User user)
     {
         return new UserResponseDto
         {
             Id = user.Id,
-            Username = user.Username,
             Email = user.Email,
+        };
+    }
+
+    public static LoginResponseDto LoginResultToDto(LoginResult loginResult)
+    {
+        return new LoginResponseDto
+        {
+            UserId = loginResult.UserId,
+            Email = loginResult.Email
         };
     }
 }

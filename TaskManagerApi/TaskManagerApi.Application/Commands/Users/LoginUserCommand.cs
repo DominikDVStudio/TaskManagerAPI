@@ -1,6 +1,6 @@
 ﻿namespace TaskManagerApi.Application.Commands.Users;
 
-public class RegisterUserCommand
+public class LoginUserCommand
 {
     public required string Email { get; init; }
     

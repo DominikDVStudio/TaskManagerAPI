@@ -3,17 +3,17 @@ using TaskManagerApi.DTOs.Users;
 
 namespace TaskManagerApi.Validators.Users;
 
-public class RegisterUserDtoValidator : AbstractValidator<RegisterUserDto>
+public class LoginUserDtoValidator : AbstractValidator<LoginUserDto>
 {
-    public RegisterUserDtoValidator()
+    public LoginUserDtoValidator()
     {
         RuleFor(x => x.Email)
-            .NotEmpty().WithMessage("Email is required")
+            .NotEmpty().WithMessage("Email is required!")
             .EmailAddress()
             .MaximumLength(100);
 
         RuleFor(x => x.Password)
-            .NotEmpty().WithMessage("Password is required")
+            .NotEmpty().WithMessage("Password is required!")
             .MinimumLength(6)
             .MaximumLength(10);
     }
