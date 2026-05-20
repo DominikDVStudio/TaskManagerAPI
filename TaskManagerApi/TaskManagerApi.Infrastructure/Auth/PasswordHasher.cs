@@ -1,6 +1,6 @@
 ﻿using TaskManagerApi.Application.Interfaces;
 
-namespace TaskManagerApi.Infrastructure;
+namespace TaskManagerApi.Infrastructure.Auth;
 
 public class PasswordHasher : IPasswordHasher
 {

@@ -10,6 +10,7 @@ using TaskManagerApi.Application.UseCases.TaskItems.DeleteTask;
 using TaskManagerApi.Application.UseCases.TaskItems.UpdateTask;
 using TaskManagerApi.Application.UseCases.Users.RegisterUser;
 using TaskManagerApi.Infrastructure;
+using TaskManagerApi.Infrastructure.Auth;
 using TaskManagerApi.Infrastructure.Data;
 using TaskManagerApi.Middleware;
 using TaskManagerApi.Validators;
@@ -32,6 +33,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
 builder.Services.AddScoped<UpdateTaskUseCase>();
 builder.Services.AddScoped<CreateTaskUseCase>();

@@ -19,7 +19,7 @@ public class UserMapper
         return new LoginResponseDto
         {
             UserId = loginResult.UserId,
-            Email = loginResult.Email
+            Email = loginResult.Email,
         };
     }
 }
