@@ -20,6 +20,7 @@ public class CreateTaskUseCase
         {
             Title = command.Title,
             Description = command.Description,
+            UserId = command.UserId,
         };
 
         await _repository.CreateTaskAsync(task);

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TaskManagerApi.Application.Commands.TaskItem;
 using TaskManagerApi.Application.Queries.TaskItems;
 using TaskManagerApi.Application.UseCases.TaskItems.CreateTask;
@@ -34,6 +36,7 @@ public class TasksController : ControllerBase
         _getTaskByIdQueryHandler = getTaskByIdQueryHandler;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<List<TaskResponseDto>>> GetTasks()
     {
@@ -67,10 +70,19 @@ public class TasksController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateTaskDto dto)
     {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+
+        bool isParsed = int.TryParse(userIdClaim.Value, out int currentLoggedUserId);
+        if (!isParsed)
+            return Unauthorized();
+
         var command = new CreateTaskCommand
         {
             Title = dto.Title,
             Description = dto.Description,
+            UserId = currentLoggedUserId,
         };
 
         var result = await _createTaskUseCase.Execute(command);

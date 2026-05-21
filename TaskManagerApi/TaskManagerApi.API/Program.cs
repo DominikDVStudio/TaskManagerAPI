@@ -1,19 +1,19 @@
+using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TaskManagerApi.Application.Interfaces;
 using TaskManagerApi.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using TaskManagerApi.Application.Queries;
+using Microsoft.IdentityModel.Tokens;
 using TaskManagerApi.Application.Queries.TaskItems;
 using TaskManagerApi.Application.UseCases.TaskItems.CreateTask;
 using TaskManagerApi.Application.UseCases.TaskItems.DeleteTask;
 using TaskManagerApi.Application.UseCases.TaskItems.UpdateTask;
 using TaskManagerApi.Application.UseCases.Users.RegisterUser;
-using TaskManagerApi.Infrastructure;
 using TaskManagerApi.Infrastructure.Auth;
 using TaskManagerApi.Infrastructure.Data;
 using TaskManagerApi.Middleware;
-using TaskManagerApi.Validators;
 using TaskManagerApi.Validators.TaskItems;
 using TaskManagerApi.Validators.Users;
 
@@ -29,6 +29,25 @@ builder.Services.AddValidatorsFromAssemblyContaining<RegisterUserDtoValidator>()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters =
+            new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(
+                            builder.Configuration["Jwt:SecretKey"]!)),
+            };
+    });
 
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -61,6 +80,10 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 

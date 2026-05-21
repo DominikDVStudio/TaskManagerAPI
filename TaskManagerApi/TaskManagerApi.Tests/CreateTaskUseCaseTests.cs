@@ -26,5 +26,5 @@ public class CreateTaskUseCaseTests
         await Assert.ThrowsAsync<ArgumentException>(
             () => useCase.Execute(command)
         );
-    }
+     }
 }
