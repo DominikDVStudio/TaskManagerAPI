@@ -80,9 +80,18 @@ public class TasksController : ControllerBase
         return Ok(response);
     }
 
+    [Authorize]
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<TaskResponseDto>> GetTaskById(int id)
+    public async Task<ActionResult<TaskResponseDto>> GetUserTaskById(int id)
     {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+
+        bool isParsed = int.TryParse(userIdClaim.Value, out int currentLoggedUserId);
+        if (!isParsed)
+            return Unauthorized();
+        
         var query = new GetTaskByIdQuery
         {
             Id = id
@@ -92,6 +101,9 @@ public class TasksController : ControllerBase
 
         if (task == null)
             return NotFound();
+
+        if (task.UserId != currentLoggedUserId)
+            return Forbid();
 
         return Ok(TaskMapper.ToDto(task));
     }
@@ -117,7 +129,7 @@ public class TasksController : ControllerBase
         var result = await _createTaskUseCase.Execute(command);
 
         return CreatedAtAction(
-            nameof(GetTaskById),
+            nameof(GetUserTaskById),
             new { id = result.Id },
             TaskMapper.ToDto(result));
     }
