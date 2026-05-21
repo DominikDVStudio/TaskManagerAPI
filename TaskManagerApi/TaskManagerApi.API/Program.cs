@@ -60,6 +60,7 @@ builder.Services.AddScoped<DeleteTaskUseCase>();
 
 builder.Services.AddScoped<GetTasksQueryHandler>();
 builder.Services.AddScoped<GetTaskByIdQueryHandler>();
+builder.Services.AddScoped<GetMyTasksQueryHandler>();
 
 builder.Services.AddScoped<RegisterUserUseCase>();
 builder.Services.AddScoped<LoginUserUseCase>();

@@ -19,26 +19,55 @@ public class TasksController : ControllerBase
     private readonly UpdateTaskUseCase _updateTaskUseCase;
     private readonly CreateTaskUseCase _createTaskUseCase;
     private readonly DeleteTaskUseCase _deleteTaskUseCase;
+
     private readonly GetTasksQueryHandler _getTasksQueryHandler;
     private readonly GetTaskByIdQueryHandler _getTaskByIdQueryHandler;
+    private readonly GetMyTasksQueryHandler _getMyTasksQueryHandler;
 
     public TasksController(
         UpdateTaskUseCase updateTaskUseCase,
         CreateTaskUseCase createTaskUseCase,
         DeleteTaskUseCase deleteTaskUseCase,
         GetTasksQueryHandler getTasksQueryHandler,
-        GetTaskByIdQueryHandler getTaskByIdQueryHandler)
+        GetTaskByIdQueryHandler getTaskByIdQueryHandler, GetMyTasksQueryHandler getMyTasksQueryHandler)
     {
         _updateTaskUseCase = updateTaskUseCase;
         _createTaskUseCase = createTaskUseCase;
         _deleteTaskUseCase = deleteTaskUseCase;
         _getTasksQueryHandler = getTasksQueryHandler;
         _getTaskByIdQueryHandler = getTaskByIdQueryHandler;
+        _getMyTasksQueryHandler = getMyTasksQueryHandler;
     }
 
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult<List<TaskResponseDto>>> GetTasks()
+    public async Task<ActionResult<List<TaskResponseDto>>> GetUserTasks()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+
+        bool isParsed = int.TryParse(userIdClaim.Value, out int currentLoggedUserId);
+        if (!isParsed)
+            return Unauthorized();
+
+        var query = new GetMyTasksQuery
+        {
+            UserId = currentLoggedUserId
+        };
+
+        List<TaskItem> tasks = await _getMyTasksQueryHandler.Execute(query);
+
+        List<TaskResponseDto> response = tasks
+            .Select(TaskMapper.ToDto)
+            .ToList();
+
+        return Ok(response);
+    }
+
+    [Authorize]
+    [HttpGet("all")]
+    public async Task<ActionResult<List<TaskResponseDto>>> GetAllTasks()
     {
         var query = new GetTasksQuery();
 
@@ -52,7 +81,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<TaskResponseDto>> GetById(int id)
+    public async Task<ActionResult<TaskResponseDto>> GetTaskById(int id)
     {
         var query = new GetTaskByIdQuery
         {
@@ -88,7 +117,7 @@ public class TasksController : ControllerBase
         var result = await _createTaskUseCase.Execute(command);
 
         return CreatedAtAction(
-            nameof(GetById),
+            nameof(GetTaskById),
             new { id = result.Id },
             TaskMapper.ToDto(result));
     }

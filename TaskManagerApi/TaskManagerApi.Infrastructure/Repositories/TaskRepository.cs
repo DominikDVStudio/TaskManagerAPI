@@ -24,6 +24,13 @@ public class TaskRepository : ITaskRepository
         return await _dbContext.Tasks.FirstOrDefaultAsync(t => t.Id == id);
     }
 
+    public async Task<List<TaskItem>> GetTasksByUserIdAsync(int userId)
+    {
+        return await _dbContext.Tasks
+            .Where(t => t.UserId == userId)
+            .ToListAsync();
+    }
+
     public async Task CreateTaskAsync(TaskItem taskItem)
     {
         await _dbContext.Tasks.AddAsync(taskItem);
@@ -34,10 +41,10 @@ public class TaskRepository : ITaskRepository
     {
         var task = await _dbContext.Tasks
             .FirstOrDefaultAsync(t => t.Id == id);
-       
-       if (task == null)
-           throw new Exception($"Task with id: {id} not found");
-       
+
+        if (task == null)
+            throw new Exception($"Task with id: {id} not found");
+
         _dbContext.Tasks.Remove(task);
         await _dbContext.SaveChangesAsync();
     }

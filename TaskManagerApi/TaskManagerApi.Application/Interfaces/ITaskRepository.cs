@@ -8,6 +8,8 @@ public interface ITaskRepository
     
     Task<TaskItem?> GetTaskByIdAsync(int id);
     
+    Task<List<TaskItem>> GetTasksByUserIdAsync(int userId);
+    
     Task CreateTaskAsync(TaskItem taskItem);
     
     Task DeleteTaskAsync(int id);
