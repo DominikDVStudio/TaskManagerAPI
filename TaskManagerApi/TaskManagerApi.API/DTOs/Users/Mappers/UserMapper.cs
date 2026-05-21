@@ -10,7 +10,7 @@ public class UserMapper
         return new UserResponseDto
         {
             Id = user.Id,
-            Email = user.Email,
+            Email = user.Email
         };
     }
 
@@ -20,6 +20,7 @@ public class UserMapper
         {
             UserId = loginResult.UserId,
             Email = loginResult.Email,
+            Token = loginResult.Token
         };
     }
 }
