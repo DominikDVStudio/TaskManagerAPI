@@ -6,6 +6,7 @@ using TaskManagerApi.Application.Interfaces;
 using TaskManagerApi.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using TaskManagerApi.Application.Queries.TaskItems;
 using TaskManagerApi.Application.UseCases.TaskItems.CreateTask;
 using TaskManagerApi.Application.UseCases.TaskItems.DeleteTask;
@@ -28,7 +29,34 @@ builder.Services.AddValidatorsFromAssemblyContaining<RegisterUserDtoValidator>()
 builder.Services.AddValidatorsFromAssemblyContaining<LoginUserDtoValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter JWT token"
+    });
+
+    options.AddSecurityRequirement(
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                Array.Empty<string>()
+            }
+        });
+});
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
