@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using TaskManagerApi.Application.Exceptions;
 
 namespace TaskManagerApi.Middleware;
 
@@ -30,6 +31,7 @@ public class ExceptionHandlingMiddleware
         {
             ArgumentException => HttpStatusCode.BadRequest,
             KeyNotFoundException => HttpStatusCode.NotFound,
+            ForbiddenException => HttpStatusCode.Forbidden,
             _ => HttpStatusCode.InternalServerError
         };
 

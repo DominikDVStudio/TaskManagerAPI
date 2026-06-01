@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagerApi.Application.Commands.TaskItem;
 using TaskManagerApi.Application.Queries.TaskItems;
@@ -14,7 +13,7 @@ namespace TaskManagerApi.Controllers;
 
 [ApiController]
 [Route("api/tasks")]
-public class TasksController : ControllerBase
+public class TasksController : BaseController
 {
     private readonly UpdateTaskUseCase _updateTaskUseCase;
     private readonly CreateTaskUseCase _createTaskUseCase;
@@ -29,7 +28,8 @@ public class TasksController : ControllerBase
         CreateTaskUseCase createTaskUseCase,
         DeleteTaskUseCase deleteTaskUseCase,
         GetTasksQueryHandler getTasksQueryHandler,
-        GetTaskByIdQueryHandler getTaskByIdQueryHandler, GetMyTasksQueryHandler getMyTasksQueryHandler)
+        GetTaskByIdQueryHandler getTaskByIdQueryHandler,
+        GetMyTasksQueryHandler getMyTasksQueryHandler)
     {
         _updateTaskUseCase = updateTaskUseCase;
         _createTaskUseCase = createTaskUseCase;
@@ -43,17 +43,9 @@ public class TasksController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<TaskResponseDto>>> GetUserTasks()
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null)
-            return Unauthorized();
-
-        bool isParsed = int.TryParse(userIdClaim.Value, out int currentLoggedUserId);
-        if (!isParsed)
-            return Unauthorized();
-
         var query = new GetMyTasksQuery
         {
-            UserId = currentLoggedUserId
+            UserId = CurrentLoggedUserId
         };
 
         List<TaskItem> tasks = await _getMyTasksQueryHandler.Execute(query);
@@ -84,46 +76,25 @@ public class TasksController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<TaskResponseDto>> GetUserTaskById(int id)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null)
-            return Unauthorized();
-
-        bool isParsed = int.TryParse(userIdClaim.Value, out int currentLoggedUserId);
-        if (!isParsed)
-            return Unauthorized();
-        
         var query = new GetTaskByIdQuery
         {
-            Id = id
+            Id = id,
+            CurrentUserId = CurrentLoggedUserId
         };
 
         var task = await _getTaskByIdQueryHandler.Execute(query);
 
-        if (task == null)
-            return NotFound();
-
-        if (task.UserId != currentLoggedUserId)
-            return Forbid();
-
-        return Ok(TaskMapper.ToDto(task));
+        return Ok(TaskMapper.ToDto(task!));
     }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateTaskDto dto)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null)
-            return Unauthorized();
-
-        bool isParsed = int.TryParse(userIdClaim.Value, out int currentLoggedUserId);
-        if (!isParsed)
-            return Unauthorized();
-
         var command = new CreateTaskCommand
         {
             Title = dto.Title,
             Description = dto.Description,
-            UserId = currentLoggedUserId,
+            UserId = CurrentLoggedUserId,
         };
 
         var result = await _createTaskUseCase.Execute(command);
@@ -139,7 +110,8 @@ public class TasksController : ControllerBase
     {
         var command = new DeleteTaskCommand
         {
-            Id = id
+            Id = id,
+            CurrentUserId = CurrentLoggedUserId
         };
 
         await _deleteTaskUseCase.Execute(command);
@@ -155,13 +127,11 @@ public class TasksController : ControllerBase
             Id = id,
             Title = dto.Title,
             Description = dto.Description,
-            IsDone = dto.IsDone
+            IsDone = dto.IsDone,
+            CurrentUserId = CurrentLoggedUserId,
         };
 
-        var result = await _updateTaskUseCase.Execute(command);
-
-        if (result == null)
-            return NotFound();
+        await _updateTaskUseCase.Execute(command);
 
         return NoContent();
     }

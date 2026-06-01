@@ -3,4 +3,6 @@
 public class GetTaskByIdQuery
 {
     public int Id { get; init; }
+    
+    public int CurrentUserId { get; init; }
 }

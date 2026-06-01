@@ -1,6 +1,4 @@
-﻿using TaskManagerApi.Domain.Entities;
-
-namespace TaskManagerApi.Application.Queries.TaskItems;
+﻿namespace TaskManagerApi.Application.Queries.TaskItems;
 
 public class GetMyTasksQuery
 {
