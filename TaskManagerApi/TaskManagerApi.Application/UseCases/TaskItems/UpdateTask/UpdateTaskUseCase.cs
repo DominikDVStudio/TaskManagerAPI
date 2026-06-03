@@ -17,11 +17,11 @@ public class UpdateTaskUseCase
     {
         var task = await _repository.GetTaskByIdAsync(command.Id);
 
-        if (task == null)
-            throw new KeyNotFoundException($"Task {command.Id} not found");
-
-        if (task.UserId != command.CurrentUserId)
-            throw new ForbiddenException("You do not have access to this task");
+       if (task == null)
+           throw new KeyNotFoundException($"Task {command.Id} not found");
+       
+       if (task.UserId != command.CurrentUserId)
+         throw new ForbiddenException("You do not have access to this task");
         
         task.Title = command.Title;
         task.Description = command.Description;

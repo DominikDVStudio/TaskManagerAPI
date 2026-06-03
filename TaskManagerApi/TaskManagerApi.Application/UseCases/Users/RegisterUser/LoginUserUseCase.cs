@@ -10,7 +10,10 @@ public class LoginUserUseCase
     private readonly IPasswordHasher _passwordHasher;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
-    public LoginUserUseCase(IUserRepository repository, IPasswordHasher passwordHasher, IJwtTokenGenerator jwtTokenGenerator)
+    public LoginUserUseCase(
+        IUserRepository repository,
+        IPasswordHasher passwordHasher,
+        IJwtTokenGenerator jwtTokenGenerator)
     {
         _repository = repository;
         _passwordHasher = passwordHasher;
@@ -28,7 +31,7 @@ public class LoginUserUseCase
 
         if (!hashedPassword)
             throw new InvalidOperationException("Invalid credentials!");
-        
+
         string token = _jwtTokenGenerator.GenerateToken(user);
 
         var loginResult = new LoginResult
