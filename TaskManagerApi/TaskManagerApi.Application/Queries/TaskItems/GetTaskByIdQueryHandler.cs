@@ -17,8 +17,8 @@ public class GetTaskByIdQueryHandler
     {
         var task = await _repository.GetTaskByIdAsync(query.Id);
 
-        if (task == null)
-            throw new KeyNotFoundException($"Task {query.Id} not found");
+       if (task == null)
+           throw new KeyNotFoundException($"Task {query.Id} not found");
 
         if (task.UserId != query.CurrentUserId)
             throw new ForbiddenException("You do not have access to this task");

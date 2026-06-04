@@ -61,7 +61,7 @@ public class UpdateTaskUseCaseTests
     }
 
     [Fact]
-    public async Task UpdateTaskUseCase_TaskShouldUpdateTask_WhenTaskExistsAndBelongsToUser()
+    public async Task UpdateTaskUseCase_ShouldUpdateTask_WhenTaskExistsAndBelongsToUser()
     {
         var repositoryMock = new Mock<ITaskRepository>();
 

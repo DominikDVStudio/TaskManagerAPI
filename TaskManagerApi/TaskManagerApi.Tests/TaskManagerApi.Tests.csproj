@@ -24,8 +24,4 @@
     <ProjectReference Include="..\TaskManagerApi.Domain\TaskManagerApi.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="QueryHandlers\" />
-  </ItemGroup>
-
 </Project>
